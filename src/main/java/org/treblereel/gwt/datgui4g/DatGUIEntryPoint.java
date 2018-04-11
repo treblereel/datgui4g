@@ -24,19 +24,14 @@ public class DatGUIEntryPoint implements EntryPoint {
     }
 
     private static void load(String scriptName) {
-        if (!isMaterializeLoaded()) {
-            try {
+        try {
 
-                ScriptInjector.fromString(DatGuiJsTextResource.IMPL.getDatGUIJS().getText())
-                        .setWindow(ScriptInjector.TOP_WINDOW).inject();
-            }catch(Exception e){
-                throw new IllegalArgumentException(e);
-            }
+            ScriptInjector.fromString(DatGuiJsTextResource.IMPL.getDatGUIJS().getText())
+                    .setWindow(ScriptInjector.TOP_WINDOW).inject();
+        } catch (Exception e) {
+            throw new IllegalArgumentException(e + " " + scriptName);
         }
     }
 
-    public static native boolean isMaterializeLoaded() /*-{
-        return (typeof $wnd['Materialize'] !== 'undefined')
-    }-*/;
 
 }
