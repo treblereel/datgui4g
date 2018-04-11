@@ -8,15 +8,7 @@
 
 
   <entry-point class="org.treblereel.gwt.datgui4g.DatGUIEntryPoint"/>
-
-
   <source path="datgui4g" />
-<!--  <resource path="datgui4g/resources" />-->
-<!--
-  <stylesheet src="datgui4g/resources/css/dat.gui.css" />
--->
 
-<!--  <set-property name="gwt.logging.enabled" value="TRUE"/>
-  <set-property name="gwt.logging.logLevel" value="ALL"/>-->
 
 </module>
