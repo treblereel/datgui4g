@@ -9,7 +9,7 @@ Maven
 <dependency>
     <groupId>org.treblereel.gwt</groupId>
     <artifactId>datgui4g</artifactId>
-    <version>0.1-beta1</version>
+    <version>0.1-beta3</version>
 </dependency>
 ```
 
