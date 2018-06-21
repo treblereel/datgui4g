@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.treblereel</groupId>
     <artifactId>datgui4g</artifactId>
-    <version>0.1-beta2</version>
+    <version>0.1-beta3-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>GWT:DATGUI4G</name>
     <description>dat.GUI for GWT</description>
@@ -34,7 +34,7 @@
         <url>https://github.com/treblereel/datgui4g</url>
         <developerConnection>scm:git:git@github.com:treblereel/datgui4g.git</developerConnection>
         <connection>scm:git:git://github.com/treblereel/datgui4g.git</connection>
-        <tag>datgui4g-0.1-beta2</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <properties>
