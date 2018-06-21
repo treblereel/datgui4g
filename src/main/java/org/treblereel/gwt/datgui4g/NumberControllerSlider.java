@@ -13,13 +13,16 @@ public class NumberControllerSlider extends NumberController<Number, NumberContr
 
     @Override
     void init() {
-        if(min instanceof Integer && max instanceof Integer){
-            setImpl(parent.guiImpl.addNumberControllerSlider(parent.entity, name, (Integer) min, (Integer)max));
-        } else if(min instanceof Double && max instanceof Double){
-            setImpl(parent.guiImpl.addNumberControllerSlider(parent.entity, name, (Double) min, (Double)max));
+        if (min instanceof Float || max instanceof Float) {
+            setImpl(parent.guiImpl.addNumberControllerSlider(parent.entity, name,  min.floatValue(), max.floatValue()));
+        } else if (min instanceof Double || max instanceof Double) {
+            setImpl(parent.guiImpl.addNumberControllerSlider(parent.entity, name, min.doubleValue(), max.doubleValue()));
+        } else {
+            setImpl(parent.guiImpl.addNumberControllerSlider(parent.entity, name, min.intValue(), max.intValue()));
         }
 
-        if(step != null && impl != null){
+
+        if (step != null && impl != null) {
             setStep(step);
         }
         super.init();

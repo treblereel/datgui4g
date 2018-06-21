@@ -60,6 +60,10 @@ public class GUIImpl {
     @JsMethod(name = "add")
     public native NumberControllerSliderImpl addNumberControllerSlider(JsPropertyMap keeper, String control, double min, double max);
 
+    @JsMethod(name = "add")
+    public native NumberControllerSliderImpl addNumberControllerSlider(JsPropertyMap keeper, String control, float min, float max);
+
+
     @JsMethod(name = "addColor")
     public native ColorControllerImpl addColorController(JsPropertyMap JsPropertyMap, int[] rgb);
 
