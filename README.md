@@ -1,9 +1,29 @@
 # datgui4g
 dat.GUI for GWT 2.8 and above, for details see [chromeexperiments dat.GUI](https://workshop.chromeexperiments.com/examples/gui/#1--Basic-Usage)
 
+# Setup
 
+Maven
 
-Example:
+```xml
+<dependency>
+    <groupId>org.treblereel.gwt</groupId>
+    <artifactId>datgui4g</artifactId>
+    <version>0.1-beta1</version>
+</dependency>
+```
+
+all you need to do is add
+```xml
+<inherits name="org.treblereel.gwt.Three4G"/>
+```
+to your gwt project module, or
+```xml
+<inherits name="org.treblereel.gwt.Three4GMin"/>
+```
+for min version.
+
+# Example:
 ```java
 
         GUI gui = new GUI();
