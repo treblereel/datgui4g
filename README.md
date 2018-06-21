@@ -78,3 +78,28 @@ Example:
         gui.finishAndBuild();
 
 ```
+
+in case you prefer chaining:
+
+```java
+        new GUI()
+                .addFolder("Local Clipping").open()
+                .add("enabled", true).onChange(result -> {
+
+        }).done()
+                .add("shadows", true).onChange(result -> {
+
+        }).done()
+                .open().add("Plane", 0.8f, 0.3, 1.25).onChange(v -> {
+
+        }).done().parent().addFolder("Global Clipping 1").open().parent()
+                .addFolder("Global Clipping")
+                .add("enabled", false).onChange(result -> {
+
+        }).done()
+                .add("Plane", 0.8f, 0.3, 1.25).onChange(v -> {
+
+        }).done().open().parent().finishAndBuild();
+
+
+```

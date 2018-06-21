@@ -1,19 +1,7 @@
 package org.treblereel.gwt.datgui4g;
 
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.json.client.JSONNumber;
-import com.google.gwt.json.client.JSONObject;
-import com.google.gwt.user.client.Window;
-import elemental2.core.JsObject;
-import jsinterop.annotations.JsProperty;
-import jsinterop.base.Js;
-import jsinterop.base.JsPropertyMap;
-
-import java.util.HashMap;
-import java.util.Map;
-
 /**
- * @author Dmitrii Tikhomirov <chani@me.com>
+ * @author Dmitrii Tikhomirov
  * Created by treblereel on 4/9/18.
  */
 public class FunctionController extends Controller<Object, FunctionController, FunctionControllerImpl> {

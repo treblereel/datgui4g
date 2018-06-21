@@ -5,7 +5,7 @@ import jsinterop.annotations.JsPackage;
 import jsinterop.annotations.JsType;
 
 /**
- * @author Dmitrii Tikhomirov <chani@me.com>
+ * @author Dmitrii Tikhomirov
  * Created by treblereel on 4/9/18.
  */
 @JsType(namespace = JsPackage.GLOBAL, isNative = true, name = "Object")
@@ -16,5 +16,9 @@ public class GUIProperty {
     public JSONObject load;
 
     public String preset;
+
+    public String name;
+
+    public boolean hideable, closed, closeOnTop;
 
 }

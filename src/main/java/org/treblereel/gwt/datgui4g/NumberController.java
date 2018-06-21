@@ -3,7 +3,7 @@ package org.treblereel.gwt.datgui4g;
 import jsinterop.base.Js;
 
 /**
- * @author Dmitrii Tikhomirov <chani@me.com>
+ * @author Dmitrii Tikhomirov
  * Created by treblereel on 4/4/18.
  */
 public abstract class NumberController<V, C extends NumberController, T extends NumberControllerImpl> extends Controller<V, C, T> {

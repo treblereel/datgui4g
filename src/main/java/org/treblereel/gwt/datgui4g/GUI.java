@@ -7,7 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * @author Dmitrii Tikhomirov <chani@me.com>
+ * @author Dmitrii Tikhomirov
  * Created by treblereel on 4/3/18.
  */
 public class GUI {
@@ -22,7 +22,7 @@ public class GUI {
 
     private GUI parent;
 
-    private boolean folder = false;
+    private boolean folder, open = false;
 
     private GUIProperty guiProperty;
 
@@ -41,15 +41,23 @@ public class GUI {
     }
 
     GUI(GUI parent, String name) {
+        this.parent = parent;
         this.name = name;
         this.folder = true;
+    }
+
+    public GUI parent() {
+        if (parent == null) {
+            return this;
+        }
+        return parent;
     }
 
     public GUI open() {
         if (guiImpl != null) {
             guiImpl.open();
         } else {
-            //TODO before created
+            this.open = true;
         }
         return this;
     }
@@ -58,7 +66,7 @@ public class GUI {
         if (guiImpl != null) {
             guiImpl.close();
         } else {
-            //TODO before created
+            this.open = false;
         }
         return this;
     }
@@ -87,7 +95,7 @@ public class GUI {
         }
     }
 
-    public void destroy(){
+    public void destroy() {
         guiImpl.destroy();
     }
 
@@ -207,14 +215,13 @@ public class GUI {
             } else {
                 guiImpl = new GUIImpl(guiProperty);
             }
-
-//            guiImpl.autoPlace = autoPlace;
-
             entity = JsPropertyMap.of();
             processControllersAndFolders(entity);
         } else {
             this.parent = parent;
             guiImpl = this.parent.guiImpl.addFolder(name);
+            if (open)
+                guiImpl.open();
             entity = JsPropertyMap.of();
             processControllersAndFolders(entity);
         }
@@ -232,12 +239,12 @@ public class GUI {
         });
     }
 
-    private void addAsType(JsPropertyMap entity, String key, Object value){
-        if(value instanceof Integer) {
+    private void addAsType(JsPropertyMap entity, String key, Object value) {
+        if (value instanceof Integer) {
             entity.set(key, ((Integer) value).doubleValue());
-        } else if(value instanceof Float){
+        } else if (value instanceof Float) {
             entity.set(key, ((Float) value).doubleValue());
-        }else {
+        } else {
             entity.set(key, value);
         }
     }

@@ -1,7 +1,7 @@
 package org.treblereel.gwt.datgui4g;
 
 /**
- * @author Dmitrii Tikhomirov <chani@me.com>
+ * @author Dmitrii Tikhomirov
  * Created by treblereel on 4/6/18.
  */
 public class ColorController extends Controller<Object, ColorController, ColorControllerImpl> {

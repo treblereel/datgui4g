@@ -10,7 +10,7 @@ import jsinterop.base.JsPropertyMap;
 import java.util.Map;
 
 /**
- * @author Dmitrii Tikhomirov <chani@me.com>
+ * @author Dmitrii Tikhomirov
  * Created by treblereel on 4/4/18.
  */
 @JsType(isNative = true, namespace = "dat", name = "GUI")

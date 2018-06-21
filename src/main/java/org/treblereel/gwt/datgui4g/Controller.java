@@ -1,7 +1,7 @@
 package org.treblereel.gwt.datgui4g;
 
 /**
- * @author Dmitrii Tikhomirov <chani@me.com>
+ * @author Dmitrii Tikhomirov
  * Created by treblereel on 4/4/18.
  */
 public abstract class Controller<V, C extends Controller, T extends ControllerImpl> {
@@ -24,7 +24,7 @@ public abstract class Controller<V, C extends Controller, T extends ControllerIm
         return parent;
     }
 
-    public C onChange(OnChange func) {
+    public C onChange(OnChange<V> func) {
         if (impl == null) {
             this.onChange = func;
         } else {
@@ -33,7 +33,7 @@ public abstract class Controller<V, C extends Controller, T extends ControllerIm
         return (C)this;
     }
 
-    public C onFinishChange(OnFinishChange func) {
+    public C onFinishChange(OnFinishChange<V> func) {
         if (impl == null) {
             this.onFinishChange = func;
         } else {

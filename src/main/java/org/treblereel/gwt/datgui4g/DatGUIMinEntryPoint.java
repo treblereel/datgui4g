@@ -8,7 +8,7 @@ import org.treblereel.gwt.datgui4g.resources.DatGuiJsTextResource;
  * @author Dmitrii Tikhomirov
  * Created by treblereel on 3/28/18.
  */
-public class DatGUIEntryPoint implements EntryPoint {
+public class DatGUIMinEntryPoint implements EntryPoint {
 
     @Override
     public void onModuleLoad() {
@@ -17,7 +17,8 @@ public class DatGUIEntryPoint implements EntryPoint {
 
     private void load() {
         try {
-            ScriptInjector.fromString(DatGuiJsTextResource.IMPL.getDatGUIJS().getText())
+
+            ScriptInjector.fromString(DatGuiJsTextResource.IMPL.getDatGUIJSMin().getText())
                     .setWindow(ScriptInjector.TOP_WINDOW).inject();
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
@@ -26,3 +27,4 @@ public class DatGUIEntryPoint implements EntryPoint {
 
 
 }
+
