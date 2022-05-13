@@ -1,8 +1,10 @@
 package org.treblereel.gwt.datgui4g;
 
+import elemental2.dom.DomGlobal;
 import elemental2.dom.HTMLElement;
 import jsinterop.base.JsPropertyMap;
 
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -99,7 +101,7 @@ public class GUI {
         guiImpl.destroy();
     }
 
-    public void remember(JsPropertyMap json) {
+    public void remember(Object json) {
         if (this.parent != null) {
             throw new IllegalArgumentException("You can only call remember on a top level GUI.");
         }
@@ -185,6 +187,16 @@ public class GUI {
         value[1] = g;
         value[2] = b;
         value[3] = alfa;
+        ColorController controller = new ColorController(this, value, key);
+        controllersAndFolders.put(key, new ControllerOrFolder(controller));
+        return controller;
+    }
+
+    public ColorController addColor(String key, HSV hsv) {
+        JsPropertyMap value = JsPropertyMap.of();
+        value.set("h", hsv.h);
+        value.set("s", hsv.s);
+        value.set("v", hsv.v);
         ColorController controller = new ColorController(this, value, key);
         controllersAndFolders.put(key, new ControllerOrFolder(controller));
         return controller;

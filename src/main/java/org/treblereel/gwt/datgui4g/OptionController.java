@@ -2,6 +2,7 @@ package org.treblereel.gwt.datgui4g;
 
 import jsinterop.base.JsPropertyMap;
 
+import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -19,14 +20,16 @@ public class OptionController extends Controller<Object, OptionController, Optio
 
     @Override
     void init() {
+        JsPropertyMap<Object> props = JsPropertyMap.of();
         if(defaultValue instanceof String[]) {
-            setImpl(parent.guiImpl.addOptionController(parent.entity, name, defaultValue));
+            String[] arr = (String[]) defaultValue;
+            Arrays.stream(arr).forEach(v -> props.set(v, v));
         }else if(defaultValue instanceof Map){
             Map map = (Map) defaultValue;
-            JsPropertyMap<Object> props = JsPropertyMap.of();
             map.forEach((k,v) ->props.set(k.toString(), v));
-            setImpl(parent.guiImpl.addOptionController(parent.entity, name, props));
         }
+        setImpl(parent.guiImpl.addOptionController(parent.entity, name, props));
+
         super.init();
         if(selected !=null){
             setValue(selected);

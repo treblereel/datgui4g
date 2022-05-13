@@ -7,7 +7,7 @@ import jsinterop.annotations.JsType;
  * @author Dmitrii Tikhomirov
  * Created by treblereel on 4/4/18.
  */
-@JsType(isNative = true, namespace = JsPackage.GLOBAL, name = "NumberController")
+@JsType(isNative = true, namespace = JsPackage.GLOBAL, name = "dat.GUI.NumberController")
 class NumberControllerImpl extends ControllerImpl {
 
     native NumberControllerImpl min(Number min);

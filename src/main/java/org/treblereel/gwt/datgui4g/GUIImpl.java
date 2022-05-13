@@ -4,6 +4,7 @@ import elemental2.dom.HTMLElement;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsMethod;
 import jsinterop.annotations.JsPackage;
+import jsinterop.annotations.JsProperty;
 import jsinterop.annotations.JsType;
 import jsinterop.base.JsPropertyMap;
 
@@ -16,9 +17,11 @@ import java.util.Map;
 @JsType(isNative = true, namespace = JsPackage.GLOBAL, name = "dat.GUI")
 public class GUIImpl {
 
+    @JsProperty
     boolean autoPlace;
 
-    HTMLElement domElement;
+    @JsProperty
+    static HTMLElement domElement;
 
     JsPropertyMap load;
 
@@ -90,7 +93,7 @@ public class GUIImpl {
 
     public native void removeFolder(GUIImpl impl);
 
-    public native void remember(JsPropertyMap json);
+    public native void remember(Object json);
 
     public native void save();
 

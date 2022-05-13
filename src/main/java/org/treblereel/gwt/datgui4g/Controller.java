@@ -6,7 +6,7 @@ package org.treblereel.gwt.datgui4g;
  */
 public abstract class Controller<V, C extends Controller, T extends ControllerImpl> {
 
-    protected GUI parent;
+    public GUI parent;
     protected String name;
     protected V defaultValue;
     protected OnChange onChange;
