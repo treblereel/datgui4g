@@ -1,8 +1,8 @@
 package org.treblereel.gwt.datgui4g;
 
-import com.google.gwt.json.client.JSONObject;
 import jsinterop.annotations.JsPackage;
 import jsinterop.annotations.JsType;
+import jsinterop.base.JsPropertyMap;
 
 /**
  * @author Dmitrii Tikhomirov
@@ -13,7 +13,7 @@ public class GUIProperty {
 
     public boolean autoPlace;
 
-    public JSONObject load;
+    public JsPropertyMap load;
 
     public String preset;
 

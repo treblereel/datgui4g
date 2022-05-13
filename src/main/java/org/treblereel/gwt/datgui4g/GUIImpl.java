@@ -1,9 +1,9 @@
 package org.treblereel.gwt.datgui4g;
 
-import com.google.gwt.json.client.JSONObject;
 import elemental2.dom.HTMLElement;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsMethod;
+import jsinterop.annotations.JsPackage;
 import jsinterop.annotations.JsType;
 import jsinterop.base.JsPropertyMap;
 
@@ -13,14 +13,14 @@ import java.util.Map;
  * @author Dmitrii Tikhomirov
  * Created by treblereel on 4/4/18.
  */
-@JsType(isNative = true, namespace = "dat", name = "GUI")
+@JsType(isNative = true, namespace = JsPackage.GLOBAL, name = "dat.GUI")
 public class GUIImpl {
 
     boolean autoPlace;
 
     HTMLElement domElement;
 
-    JSONObject load;
+    JsPropertyMap load;
 
     String preset;
 
