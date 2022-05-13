@@ -1,9 +1,24 @@
+/*
+ * Copyright © 2022 Treblereel
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
+ */
+
 package org.treblereel.gwt.datgui4g;
 
-import com.google.gwt.json.client.JSONObject;
 import elemental2.dom.HTMLElement;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsMethod;
+import jsinterop.annotations.JsPackage;
+import jsinterop.annotations.JsProperty;
 import jsinterop.annotations.JsType;
 import jsinterop.base.JsPropertyMap;
 
@@ -13,14 +28,16 @@ import java.util.Map;
  * @author Dmitrii Tikhomirov
  * Created by treblereel on 4/4/18.
  */
-@JsType(isNative = true, namespace = "dat", name = "GUI")
+@JsType(isNative = true, namespace = JsPackage.GLOBAL, name = "dat.GUI")
 public class GUIImpl {
 
+    @JsProperty
     boolean autoPlace;
 
-    HTMLElement domElement;
+    @JsProperty
+    static HTMLElement domElement;
 
-    JSONObject load;
+    JsPropertyMap load;
 
     String preset;
 
@@ -90,7 +107,7 @@ public class GUIImpl {
 
     public native void removeFolder(GUIImpl impl);
 
-    public native void remember(JsPropertyMap json);
+    public native void remember(Object json);
 
     public native void save();
 
