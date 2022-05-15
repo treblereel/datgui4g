@@ -20,13 +20,13 @@ package org.treblereel.gwt.datgui4g;
  */
 public class NumberControllerBox extends NumberController<Number, NumberControllerBox, NumberControllerBoxImpl> {
 
-    NumberControllerBox(GUI parent, Number number, String name) {
-        super(parent, number, name);
+    NumberControllerBox(GUI parent, Object holder, String name) {
+        super(parent, holder, name);
     }
 
     @Override
-    void init() {
-        setImpl(parent.guiImpl.addNumberControllerBox(parent.entity, this.name));
+    protected void init() {
+        setImpl(parent.guiImpl.addNumberControllerBox(holder, this.name));
         if(min != null){
             setMin(min);
         }

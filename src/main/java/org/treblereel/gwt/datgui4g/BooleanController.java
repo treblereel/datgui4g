@@ -20,13 +20,13 @@ package org.treblereel.gwt.datgui4g;
  */
 public class BooleanController extends Controller<Boolean, BooleanController, BooleanControllerImpl> {
 
-    BooleanController(GUI parent, Boolean value, String name) {
-        super(parent, value, name);
+    BooleanController(GUI parent, Object entity, String name) {
+        super(parent, entity, name);
     }
 
     @Override
-    void init() {
-        setImpl(parent.guiImpl.addBooleanController(parent.entity, name));
+    protected void init() {
+        setImpl(parent.guiImpl.addBooleanController(holder, name));
         super.init();
     }
 }

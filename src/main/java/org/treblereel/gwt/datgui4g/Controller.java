@@ -21,16 +21,16 @@ package org.treblereel.gwt.datgui4g;
 public abstract class Controller<V, C extends Controller, T extends ControllerImpl> {
 
     public GUI parent;
+    protected Object holder;
     protected String name;
-    protected V defaultValue;
-    protected OnChange onChange;
-    protected OnFinishChange onFinishChange;
+    protected OnChange<V> onChange;
+    protected OnFinishChange<V> onFinishChange;
     protected T impl;
 
 
-    Controller(GUI parent, V defaultValue, String name) {
+    Controller(GUI parent, Object holder, String name) {
         this.parent = parent;
-        this.defaultValue = defaultValue;
+        this.holder = holder;
         this.name = name;
     }
 
@@ -53,12 +53,12 @@ public abstract class Controller<V, C extends Controller, T extends ControllerIm
         } else {
             impl.onFinishChange(func);
         }
-        return (C)this;
+        return (C) this;
     }
 
     public C setValue(V newValue) {
         impl.setValue(newValue);
-        return (C)this;
+        return (C) this;
     }
 
     public V getValue() {
@@ -70,11 +70,16 @@ public abstract class Controller<V, C extends Controller, T extends ControllerIm
         return impl.isModified();
     }
 
+    public C listen() {
+        this.parent.addListen(this);
+        return (C) this;
+    }
+
     void setImpl(T impl) {
         this.impl = impl;
     }
 
-    void init() {
+    protected void init() {
         if (onChange != null) {
             impl.onChange(onChange);
         }

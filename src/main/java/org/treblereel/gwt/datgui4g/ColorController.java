@@ -20,13 +20,13 @@ package org.treblereel.gwt.datgui4g;
  */
 public class ColorController extends Controller<Object, ColorController, ColorControllerImpl> {
 
-    ColorController(GUI parent, Object defaultValue, String name) {
-        super(parent, defaultValue, name);
+    ColorController(GUI parent, Object entity, String name) {
+        super(parent, entity, name);
     }
 
     @Override
-    void init() {
-        setImpl(parent.guiImpl.addColorController(parent.entity, name));
+    protected void init() {
+        setImpl(parent.guiImpl.addColorController(holder, name));
         super.init();
     }
 }

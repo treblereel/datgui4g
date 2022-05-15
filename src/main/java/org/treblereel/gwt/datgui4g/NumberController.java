@@ -24,8 +24,8 @@ public abstract class NumberController<V, C extends NumberController, T extends 
 
     protected Number min, max, step;
 
-    NumberController(GUI parent, V number, String name) {
-        super(parent, number, name);
+    NumberController(GUI parent, Object holder, String name) {
+        super(parent, holder, name);
     }
 
     public C setMax(Number max) {
