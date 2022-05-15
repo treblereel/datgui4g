@@ -20,13 +20,13 @@ package org.treblereel.gwt.datgui4g;
  */
 public class StringController extends Controller<String, StringController, StringControllerImpl>{
 
-    StringController(GUI parent, String value, String name) {
-        super(parent, value, name);
+    StringController(GUI parent, Object entity, String name) {
+        super(parent, entity, name);
     }
 
     @Override
-    void init() {
-        setImpl(parent.guiImpl.addStringController(parent.entity, name));
+    protected void init() {
+        setImpl(parent.guiImpl.addStringController(holder, name));
         super.init();
     }
 }

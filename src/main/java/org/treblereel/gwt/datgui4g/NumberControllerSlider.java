@@ -20,19 +20,19 @@ package org.treblereel.gwt.datgui4g;
  */
 public class NumberControllerSlider extends NumberController<Number, NumberControllerSlider, NumberControllerSliderImpl> {
 
-    NumberControllerSlider(GUI parent, Number number, String name) {
-        super(parent, number, name);
+    NumberControllerSlider(GUI parent, Object holder, String name) {
+        super(parent, holder, name);
     }
 
 
     @Override
-    void init() {
+    protected void init() {
         if (min instanceof Float || max instanceof Float) {
-            setImpl(parent.guiImpl.addNumberControllerSlider(parent.entity, name,  min.floatValue(), max.floatValue()));
+            setImpl(parent.guiImpl.addNumberControllerSlider(holder, name,  min.floatValue(), max.floatValue()));
         } else if (min instanceof Double || max instanceof Double) {
-            setImpl(parent.guiImpl.addNumberControllerSlider(parent.entity, name, min.doubleValue(), max.doubleValue()));
+            setImpl(parent.guiImpl.addNumberControllerSlider(holder, name, min.doubleValue(), max.doubleValue()));
         } else {
-            setImpl(parent.guiImpl.addNumberControllerSlider(parent.entity, name, min.intValue(), max.intValue()));
+            setImpl(parent.guiImpl.addNumberControllerSlider(holder, name, min.intValue(), max.intValue()));
         }
 
 

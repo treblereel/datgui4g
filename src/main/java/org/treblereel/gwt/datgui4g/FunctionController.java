@@ -14,52 +14,24 @@
 
 package org.treblereel.gwt.datgui4g;
 
+import elemental2.core.Global;
+import elemental2.dom.DomGlobal;
+
 /**
  * @author Dmitrii Tikhomirov
  * Created by treblereel on 4/9/18.
  */
 public class FunctionController extends Controller<Object, FunctionController, FunctionControllerImpl> {
 
-    OnClick onClick;
-
-    FunctionController(GUI parent, OnClick value, String name) {
-        super(parent, value, name);
+    FunctionController(GUI parent, Object holder, String name) {
+        super(parent, holder, name);
     }
 
     @Override
-    void init() {
-       // JsPropertyMap map = JsPropertyMap.of();
-       // map.set(name, onClick);
+    protected void init() {
+        DomGlobal.console.log("??? " + Global.JSON.stringify(holder));
 
-
-        //Map map = new HashMap();
-        //map.put(name, onClick);
-
-        //parent.entity.put(name, onClick);
-
-        //JavaScriptObject obj = parent.entity;
-        //obj.
-
-        //Object obj = Js.uncheckedCast(parent.entity);
-
-/*        Map map = new HashMap();
-        map.put(name, new OnClick() {
-            @Override
-            public void onClick() {
-                Window.alert("OILO");
-            }
-        });*/
-
-     //   jsinterop.base.Js.asPropertyMap(obj).set(name, onClick);
-
-      //  JSONObject o = Js.uncheckedCast(onClick);
-
-       // JSONObject o = new JSONObject(onClick);
-
-        //parent.entity.put(name, new JSONNumber(5));
-
-        setImpl(parent.guiImpl.addFunctionController(parent.entity, name));
-
+        setImpl(parent.guiImpl.addFunctionController(holder, name));
         super.init();
     }
 }

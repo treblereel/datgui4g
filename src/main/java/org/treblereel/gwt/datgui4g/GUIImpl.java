@@ -14,7 +14,7 @@
 
 package org.treblereel.gwt.datgui4g;
 
-import elemental2.dom.HTMLElement;
+import elemental2.dom.HTMLDivElement;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsMethod;
 import jsinterop.annotations.JsPackage;
@@ -35,7 +35,7 @@ public class GUIImpl {
     boolean autoPlace;
 
     @JsProperty
-    static HTMLElement domElement;
+    HTMLDivElement domElement;
 
     JsPropertyMap load;
 
@@ -54,50 +54,47 @@ public class GUIImpl {
     public native GUIImpl addFolder(String name);
 
     @JsMethod(name = "add")
-    public native BooleanControllerImpl addBooleanController(JsPropertyMap keeper, String control);
+    public native BooleanControllerImpl addBooleanController(Object keeper, String control);
 
     @JsMethod(name = "add")
-    public native StringControllerImpl addStringController(JsPropertyMap keeper, String control);
+    public native StringControllerImpl addStringController(Object keeper, String control);
 
     @JsMethod(name = "add")
-    public native NumberControllerBoxImpl addNumberControllerBox(JsPropertyMap keeper, String control);
+    public native NumberControllerBoxImpl addNumberControllerBox(Object keeper, String control);
 
     @JsMethod(name = "add")
-    public native NumberControllerBoxImpl addNumberControllerBox(JsPropertyMap keeper, String control, int min);
+    public native NumberControllerBoxImpl addNumberControllerBox(Object keeper, String control, int min);
 
     @JsMethod(name = "add")
-    public native NumberControllerBoxImpl addNumberControllerBox(JsPropertyMap keeper, String control, float min);
+    public native NumberControllerBoxImpl addNumberControllerBox(Object keeper, String control, float min);
 
     @JsMethod(name = "add")
-    public native NumberControllerBoxImpl addNumberControllerBox(JsPropertyMap keeper, String control, double min);
+    public native NumberControllerBoxImpl addNumberControllerBox(Object keeper, String control, double min);
 
     @JsMethod(name = "add")
-    public native NumberControllerSliderImpl addNumberControllerSlider(JsPropertyMap keeper, String control, int min, int max);
+    public native NumberControllerSliderImpl addNumberControllerSlider(Object keeper, String control, int min, int max);
 
     @JsMethod(name = "add")
-    public native NumberControllerSliderImpl addNumberControllerSlider(JsPropertyMap keeper, String control, double min, double max);
+    public native NumberControllerSliderImpl addNumberControllerSlider(Object keeper, String control, double min, double max);
 
     @JsMethod(name = "add")
-    public native NumberControllerSliderImpl addNumberControllerSlider(JsPropertyMap keeper, String control, float min, float max);
+    public native NumberControllerSliderImpl addNumberControllerSlider(Object keeper, String control, float min, float max);
 
 
     @JsMethod(name = "addColor")
-    public native ColorControllerImpl addColorController(JsPropertyMap JsPropertyMap, int[] rgb);
+    public native ColorControllerImpl addColorController(Object JsPropertyMap, int[] rgb);
 
     @JsMethod(name = "addColor")
-    public native ColorControllerImpl addColorController(JsPropertyMap JsPropertyMap, double[] rgb);
+    public native ColorControllerImpl addColorController(Object JsPropertyMap, double[] rgb);
 
     @JsMethod(name = "addColor")
-    public native ColorControllerImpl addColorController(JsPropertyMap JsPropertyMap, String cssColor);
+    public native ColorControllerImpl addColorController(Object JsPropertyMap, String cssColor);
 
     @JsMethod(name = "add")
-    public native OptionControllerImpl addOptionController(JsPropertyMap JsPropertyMap, String control, Object args);
+    public native OptionControllerImpl addOptionController(Object JsPropertyMap, String control, Object args);
 
     @JsMethod(name = "add")
-    public native FunctionControllerImpl addFunctionController(JsPropertyMap JsPropertyMap, String name);
-
-    @JsMethod(name = "add")
-    public native FunctionControllerImpl addFunctionController(Map JsPropertyMap, String name);
+    public native FunctionControllerImpl addFunctionController(Object JsPropertyMap, String name);
 
     public native void open();
 
@@ -121,5 +118,5 @@ public class GUIImpl {
 
     public native void destroy();
 
-
+    public native void listen(ControllerImpl impl);
 }

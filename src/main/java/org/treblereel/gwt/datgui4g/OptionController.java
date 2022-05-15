@@ -14,6 +14,7 @@
 
 package org.treblereel.gwt.datgui4g;
 
+import elemental2.core.JsArray;
 import jsinterop.base.JsPropertyMap;
 
 import java.util.Arrays;
@@ -23,30 +24,33 @@ import java.util.Map;
  * @author Dmitrii Tikhomirov
  * Created by treblereel on 4/6/18.
  */
-public class OptionController extends Controller<Object, OptionController, OptionControllerImpl>{
+public class OptionController extends Controller<String, OptionController, OptionControllerImpl>{
 
-    private Object selected;
+    private final JsPropertyMap<Object> props = JsPropertyMap.of();
 
-    OptionController(GUI parent, Object store, String name, Object selected) {
-        super(parent, store, name);
-        this.selected = selected;
+    OptionController(GUI parent, Object holder, Map<String, ?> store, String name) {
+        super(parent, holder, name);
+        store.entrySet().stream().forEach(k -> props.set(k.getKey(), String.valueOf(k.getValue())));
+    }
+
+    OptionController(GUI parent, Object holder, String[] store, String name) {
+        super(parent, holder, name);
+        Arrays.stream(store)
+                .forEach(k -> props.set(k, k));
+    }
+
+    OptionController(GUI parent, Object holder, JsArray values, String name) {
+        super(parent, holder, name);
+
+        values.forEach((p0, p1, p2) -> {
+            props.set(String.valueOf(p0), String.valueOf(p0));
+            return null;
+        });
     }
 
     @Override
-    void init() {
-        JsPropertyMap<Object> props = JsPropertyMap.of();
-        if(defaultValue instanceof String[]) {
-            String[] arr = (String[]) defaultValue;
-            Arrays.stream(arr).forEach(v -> props.set(v, v));
-        }else if(defaultValue instanceof Map){
-            Map map = (Map) defaultValue;
-            map.forEach((k,v) ->props.set(k.toString(), v));
-        }
-        setImpl(parent.guiImpl.addOptionController(parent.entity, name, props));
-
+    protected void init() {
+        setImpl(parent.guiImpl.addOptionController(holder, name, props));
         super.init();
-        if(selected !=null){
-            setValue(selected);
-        }
     }
 }

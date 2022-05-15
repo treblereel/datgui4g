@@ -14,6 +14,8 @@
 
 package org.treblereel.gwt.datgui4g;
 
+import elemental2.core.JsArray;
+import elemental2.dom.HTMLDivElement;
 import elemental2.dom.HTMLElement;
 import jsinterop.base.JsPropertyMap;
 
@@ -30,7 +32,7 @@ public class GUI {
 
     Map<String, ControllerOrFolder> controllersAndFolders = new LinkedHashMap<>();
 
-    JsPropertyMap entity;
+    private final JsArray<Controller> listen = new JsArray<>();
 
     private String name;
 
@@ -135,100 +137,79 @@ public class GUI {
         return folder;
     }
 
-    public Object getValue(String key) {
-        return entity.get(key);
-    }
-
-    public StringController add(String key, String value) {
+    public StringController addString(Object value, String key) {
         StringController controller = new StringController(this, value, key);
         controllersAndFolders.put(key, new ControllerOrFolder(controller));
         return controller;
     }
 
-    public BooleanController add(String key, Boolean value) {
+    public BooleanController addBoolean(Object value, String key) {
         BooleanController controller = new BooleanController(this, value, key);
         controllersAndFolders.put(key, new ControllerOrFolder(controller));
         return controller;
     }
 
-    public NumberControllerBox add(String key, Number value) {
+    public NumberControllerBox addNumber(Object value, String key) {
         NumberControllerBox controller = new NumberControllerBox(this, value, key);
         controllersAndFolders.put(key, new ControllerOrFolder(controller));
         return controller;
     }
 
-    public NumberControllerBox add(String key, Number value, Number min) {
+    public NumberControllerBox addNumberBox(Object value, String key, Number min) {
         NumberControllerBox controller = new NumberControllerBox(this, value, key);
         controller.setMin(min);
         controllersAndFolders.put(key, new ControllerOrFolder(controller));
         return controller;
     }
 
-    public NumberControllerSlider add(String key, Number value, Number min, Number max) {
+    public NumberControllerBox addNumberBox(Object value, String key, Number min, Number max) {
+        NumberControllerBox controller = new NumberControllerBox(this, value, key);
+        controller.setMax(max).setMin(min);
+        controllersAndFolders.put(key, new ControllerOrFolder(controller));
+        return controller;
+    }
+
+    public NumberControllerSlider addNumberSlider(Object value, String key, Number min, Number max) {
         NumberControllerSlider controller = new NumberControllerSlider(this, value, key);
         controller.setMax(max).setMin(min);
         controllersAndFolders.put(key, new ControllerOrFolder(controller));
         return controller;
     }
 
-    public FunctionController add(String key, OnClick onClick) {
-        FunctionController controller = new FunctionController(this, onClick, key);
+    public FunctionController addFunction(Object entity, String key) {
+        FunctionController controller = new FunctionController(this, entity, key);
         controllersAndFolders.put(key, new ControllerOrFolder(controller));
         return controller;
     }
 
-    public ColorController addColor(String key, String value) {
-        ColorController controller = new ColorController(this, value, key);
+    public ColorController addColor(Object entity, String key) {
+        ColorController controller = new ColorController(this, entity, key);
         controllersAndFolders.put(key, new ControllerOrFolder(controller));
         return controller;
     }
 
-    public ColorController addColor(String key, double r, double g, double b) {
-        double[] value = new double[3];
-        value[0] = r;
-        value[1] = g;
-        value[2] = b;
-        ColorController controller = new ColorController(this, value, key);
+    public OptionController addOption(Object entity, String key, String[] values) {
+        OptionController controller = new OptionController(this, entity, values, key);
         controllersAndFolders.put(key, new ControllerOrFolder(controller));
         return controller;
     }
 
-    public ColorController addColor(String key, double r, double g, double b, double alfa) {
-        double[] value = new double[4];
-        value[0] = r;
-        value[1] = g;
-        value[2] = b;
-        value[3] = alfa;
-        ColorController controller = new ColorController(this, value, key);
+    public OptionController addOption(Object entity, String key, Map values) {
+        OptionController controller = new OptionController(this, entity, values, key);
         controllersAndFolders.put(key, new ControllerOrFolder(controller));
         return controller;
     }
 
-    public ColorController addColor(String key, HSV hsv) {
-        JsPropertyMap value = JsPropertyMap.of();
-        value.set("h", hsv.h);
-        value.set("s", hsv.s);
-        value.set("v", hsv.v);
-        ColorController controller = new ColorController(this, value, key);
-        controllersAndFolders.put(key, new ControllerOrFolder(controller));
-        return controller;
-    }
-
-    public OptionController add(String key, String[] values, Object selected) {
-        OptionController controller = new OptionController(this, values, key, selected);
-        controllersAndFolders.put(key, new ControllerOrFolder(controller));
-        return controller;
-    }
-
-    public OptionController add(String key, Map values, Object selected) {
-        OptionController controller = new OptionController(this, values, key, selected);
+    public OptionController addOption(Object entity, String key, JsArray values) {
+        OptionController controller = new OptionController(this, entity, values, key);
         controllersAndFolders.put(key, new ControllerOrFolder(controller));
         return controller;
     }
 
     public GUI finishAndBuild() {
-        if (!folder)
+        if (!folder) {
             build(null);
+        }
         return this;
     }
 
@@ -239,38 +220,28 @@ public class GUI {
             } else {
                 guiImpl = new GUIImpl(guiProperty);
             }
-            entity = JsPropertyMap.of();
-            processControllersAndFolders(entity);
         } else {
             this.parent = parent;
             guiImpl = this.parent.guiImpl.addFolder(name);
             if (open)
                 guiImpl.open();
-            entity = JsPropertyMap.of();
-            processControllersAndFolders(entity);
         }
+        postBuildTasks();
     }
 
-    private void processControllersAndFolders(JsPropertyMap entity) {
+    private void postBuildTasks() {
         controllersAndFolders.forEach((k, v) -> {
             if (v.folder != null) {
                 v.folder.build(this);
             } else {
-                Controller controller = v.controller;
-                addAsType(entity, controller.name, controller.defaultValue);
-                controller.init();
+                v.controller.init();
             }
         });
-    }
 
-    private void addAsType(JsPropertyMap entity, String key, Object value) {
-        if (value instanceof Integer) {
-            entity.set(key, ((Integer) value).doubleValue());
-        } else if (value instanceof Float) {
-            entity.set(key, ((Float) value).doubleValue());
-        } else {
-            entity.set(key, value);
-        }
+        listen.forEach((p0, p1, p2) -> {
+            listen(p0);
+            return null;
+        });
     }
 
     public boolean isAutoPlace() {
@@ -290,18 +261,19 @@ public class GUI {
         return this;
     }
 
-    public HTMLElement getDomElement() {
+    public HTMLDivElement getDomElement() {
         if (guiImpl == null) {
             throw new IllegalStateException("GUI doesn't constructed");
         }
         return guiImpl.domElement;
     }
 
-    public JsPropertyMap getState() {
-        if (guiImpl == null) {
-            throw new IllegalStateException("GUI doesn't constructed");
-        }
-        return entity;
+    void addListen(Controller controller) {
+        listen.push(controller);
+    }
+
+    public void listen(Controller controller) {
+        guiImpl.listen(controller.impl);
     }
 
     class ControllerOrFolder {

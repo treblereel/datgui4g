@@ -31,13 +31,13 @@ dat.GUI.instance = function () {};
  */
 dat.GUI.prototype.onClick = function (gui) {};
 /**
- * @type {HTMLElement}
+ * @type {HTMLDivElement}
  */
-dat.GUI.domElement;
+dat.GUI.prototype.domElement;
 
 
 /**
- * @param {Object} target
+ * @param {*} target
  * @param {string} propName
  * @param {*=} param3
  * @param {number=} param4
@@ -51,7 +51,7 @@ dat.GUI.prototype.add = function (target, propName, param3, param4) {};
 var HSV_to_RGB = function (h, s, v) {};
 
 /**
- * @param {Object} target
+ * @param {*} target
  * @param {string} propName
  * @param {number|boolean|Object|Array<number>|HSV_to_RGB=} param3
  * @param {number=} param4
