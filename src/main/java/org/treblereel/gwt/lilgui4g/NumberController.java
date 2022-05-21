@@ -14,47 +14,40 @@
 
 package org.treblereel.gwt.lilgui4g;
 
-import jsinterop.base.Js;
+import elemental2.core.JsNumber;
 
 /**
  * @author Dmitrii Tikhomirov
  * Created by treblereel on 4/4/18.
  */
-public abstract class NumberController<V, C extends NumberController, T extends NumberControllerImpl> extends Controller<V, C, T> {
+public class NumberController extends Controller<Number, NumberController, ControllerImpl> {
 
-    protected Number min, max, step;
-
-    NumberController(GUI parent, Object holder, String name) {
-        super(parent, holder, name);
+    NumberController(GUI parent, Object entity, String name) {
+        super(parent, parent.guiImpl.addNumberController(entity, name));
     }
 
-    public C setMax(Number max) {
-        if (impl == null) {
-            this.max = max;
-        }else {
-            NumberControllerImpl numberControllerImpl = Js.uncheckedCast(impl);
-            numberControllerImpl.max(max);
-        }
-        return (C) this;
+    public NumberController setMax(Number max) {
+        impl.max(new JsNumber(max));
+        return this;
     }
 
-    public C setMin(Number min) {
-        if (impl == null) {
-            this.min = min;
-        }else {
-            NumberControllerImpl numberControllerImpl = Js.uncheckedCast(impl);
-            numberControllerImpl.min(min);
-        }
-        return (C) this;
+    public NumberController setMin(Number min) {
+        impl.min(new JsNumber(min));
+        return this;
     }
 
-    public C setStep(Number step) {
-        if (impl == null) {
-            this.step = step;
-        } else {
-            NumberControllerImpl numberControllerImpl = Js.uncheckedCast(impl);
-            numberControllerImpl.step(step);
-        }
-        return (C) this;
+    public NumberController setStep(Number step) {
+        impl.step(new JsNumber(step));
+        return this;
+    }
+
+    public NumberController onChange(OnChange<Number> func) {
+        impl.onChange(result -> func.onChange((new Double(new JsNumber(result).valueOf()))));
+        return this;
+    }
+
+    public NumberController onFinishChange(OnFinishChange<Number> func) {
+        impl.onChange(result -> func.onFinishChange((new Double(new JsNumber(result).valueOf()))));
+        return this;
     }
 }

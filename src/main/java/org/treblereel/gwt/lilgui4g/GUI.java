@@ -15,10 +15,9 @@
 package org.treblereel.gwt.lilgui4g;
 
 import elemental2.core.JsArray;
-import elemental2.dom.HTMLDivElement;
-import jsinterop.base.JsPropertyMap;
+import elemental2.dom.HTMLElement;
+import jsinterop.annotations.JsProperty;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -27,38 +26,46 @@ import java.util.Map;
  */
 public class GUI {
 
+    public HTMLElement getDomElement() {
+        return guiImpl.domElement;
+    }
+
+
+    public boolean isClosed() {
+        return guiImpl._closed;
+    }
+
+    public JsArray<Controller> getControllers() {
+        return controllers;
+    }
+
+    public JsArray<GUI> getFolders() {
+        return folders;
+    }
+
+    @JsProperty(name = "folders")
+    JsArray<GUIImpl> _folders;
+
+    @JsProperty(name = "controllers")
+    JsArray<ControllerImpl> _controllers;
+
     GUIImpl guiImpl;
 
-    Map<String, ControllerOrFolder> controllersAndFolders = new LinkedHashMap<>();
-
-    private final JsArray<Controller> listen = new JsArray<>();
-
-    private String name;
+    private JsArray<Controller> controllers = new JsArray<>();
+    private JsArray<GUI> folders = new JsArray<>();
 
     private GUI parent;
 
-    private boolean folder, open = false;
-
-    private GUIProperty guiProperty;
-
-    private boolean autoPlace = true;
-
-    private JsPropertyMap load;
-
-    private String preset;
-
     public GUI() {
+        guiImpl = new GUIImpl();
+    }
 
+    private GUI(GUIImpl gui) {
+        this.guiImpl = gui;
     }
 
     public GUI(GUIProperty guiProperty) {
-        this.guiProperty = guiProperty;
-    }
-
-    GUI(GUI parent, String name) {
-        this.parent = parent;
-        this.name = name;
-        this.folder = true;
+        guiImpl = new GUIImpl(guiProperty.toNative());
     }
 
     public GUI parent() {
@@ -68,214 +75,149 @@ public class GUI {
         return parent;
     }
 
-    public GUI open() {
-        if (guiImpl != null) {
-            guiImpl.open();
-        } else {
-            this.open = true;
-        }
-        return this;
-    }
-
-    public GUI close() {
-        if (guiImpl != null) {
-            guiImpl.close();
-        } else {
-            this.open = false;
-        }
-        return this;
-    }
-
-    public GUI revert() {
-        if (guiImpl != null) {
-            guiImpl.revert();
-        } else {
-            //TODO before created
-        }
-        return this;
-    }
-
-    public GUI revert(GUI gui) {
-        if (guiImpl != null) {
-            guiImpl.revert(gui.guiImpl);
-        } else {
-            //TODO before created
-        }
-        return this;
-    }
-
-    public void updateDisplay() {
-        if (guiImpl != null) {
-            guiImpl.updateDisplay();
-        }
-    }
-
-    public void destroy() {
-        guiImpl.destroy();
-    }
-
-    public void remember(Object json) {
-        if (this.parent != null) {
-            throw new IllegalArgumentException("You can only call remember on a top level GUI.");
-        }
-        if (this.guiImpl != null) {
-            this.guiImpl.remember(json); //TODO
-        }
-    }
-
     public GUI addFolder(String name) {
-        GUI folder = new GUI(this, name);
-        controllersAndFolders.put(name, new ControllerOrFolder(folder));
+        GUI folder = new GUI(this.guiImpl.addFolder(name));
+        folders.push(folder);
+        folder.parent = this;
         return folder;
     }
 
     public StringController addString(Object value, String key) {
         StringController controller = new StringController(this, value, key);
-        controllersAndFolders.put(key, new ControllerOrFolder(controller));
+        controllers.push(controller);
         return controller;
     }
 
     public BooleanController addBoolean(Object value, String key) {
         BooleanController controller = new BooleanController(this, value, key);
-        controllersAndFolders.put(key, new ControllerOrFolder(controller));
+        controllers.push(controller);
         return controller;
     }
 
-    public NumberControllerBox addNumber(Object value, String key) {
-        NumberControllerBox controller = new NumberControllerBox(this, value, key);
-        controllersAndFolders.put(key, new ControllerOrFolder(controller));
+    public NumberController addNumber(Object value, String key) {
+        NumberController controller = new NumberController(this, value, key);
+        controllers.push(controller);
         return controller;
     }
 
-    public NumberControllerBox addNumber(Object value, String key, Number min) {
-        NumberControllerBox controller = new NumberControllerBox(this, value, key);
+    public NumberController addNumber(Object value, String key, Number min) {
+        NumberController controller = new NumberController(this, value, key);
         controller.setMin(min);
-        controllersAndFolders.put(key, new ControllerOrFolder(controller));
+        controllers.push(controller);
         return controller;
     }
 
-    public NumberControllerBox addNumber(Object value, String key, Number min, Number max) {
-        NumberControllerBox controller = new NumberControllerBox(this, value, key);
+    public NumberController addNumber(Object value, String key, Number min, Number max) {
+        NumberController controller = new NumberController(this, value, key);
         controller.setMax(max).setMin(min);
-        controllersAndFolders.put(key, new ControllerOrFolder(controller));
+        controllers.push(controller);
         return controller;
     }
 
-    public NumberControllerBox addNumber(Object value, String key, Number min, Number max, Number step) {
-        NumberControllerBox controller = new NumberControllerBox(this, value, key);
+    public NumberController addNumber(Object value, String key, Number min, Number max, Number step) {
+        NumberController controller = new NumberController(this, value, key);
         controller.setMax(max).setMin(min).setStep(step);
-        controllersAndFolders.put(key, new ControllerOrFolder(controller));
+        controllers.push(controller);
         return controller;
     }
 
     public FunctionController addFunction(Object entity, String key) {
         FunctionController controller = new FunctionController(this, entity, key);
-        controllersAndFolders.put(key, new ControllerOrFolder(controller));
+        controllers.push(controller);
         return controller;
     }
 
     public ColorController addColor(Object entity, String key) {
         ColorController controller = new ColorController(this, entity, key);
-        controllersAndFolders.put(key, new ControllerOrFolder(controller));
+        controllers.push(controller);
         return controller;
     }
 
     public OptionController addOption(Object entity, String key, String[] values) {
         OptionController controller = new OptionController(this, entity, values, key);
-        controllersAndFolders.put(key, new ControllerOrFolder(controller));
+        controllers.push(controller);
         return controller;
     }
 
     public OptionController addOption(Object entity, String key, Map values) {
         OptionController controller = new OptionController(this, entity, values, key);
-        controllersAndFolders.put(key, new ControllerOrFolder(controller));
+        controllers.push(controller);
         return controller;
     }
 
     public OptionController addOption(Object entity, String key, JsArray values) {
         OptionController controller = new OptionController(this, entity, values, key);
-        controllersAndFolders.put(key, new ControllerOrFolder(controller));
+        controllers.push(controller);
         return controller;
     }
 
-    public GUI finishAndBuild() {
-        if (!folder) {
-            build(null);
-        }
+    public GUI load(Object obj) {
+        guiImpl.load(obj);
         return this;
     }
 
-    void build(GUI parent) {
-        if (!folder) {
-            if (guiProperty == null) {
-                guiImpl = new GUIImpl();
-            } else {
-                guiImpl = new GUIImpl(guiProperty);
-            }
-        } else {
-            this.parent = parent;
-            guiImpl = this.parent.guiImpl.addFolder(name);
-            if (open)
-                guiImpl.open();
-        }
-        postBuildTasks();
-    }
-
-    private void postBuildTasks() {
-        controllersAndFolders.forEach((k, v) -> {
-            if (v.folder != null) {
-                v.folder.build(this);
-            } else {
-                v.controller.init();
-            }
-        });
-
-        listen.forEach((p0, p1, p2) -> {
-            p0.listen();
-            return null;
-        });
-    }
-
-    public boolean isAutoPlace() {
-        if (guiImpl == null) {
-            return autoPlace;
-        } else {
-            return guiImpl.autoPlace;
-        }
-    }
-
-    public GUI setAutoPlace(boolean autoPlace) {
-        if (guiImpl == null) {
-            this.autoPlace = autoPlace;
-        } else {
-            guiImpl.autoPlace = autoPlace;
-        }
+    public GUI load(Object obj, boolean recursive) {
+        guiImpl.load(obj, recursive);
         return this;
     }
 
-    public HTMLDivElement getDomElement() {
-        if (guiImpl == null) {
-            throw new IllegalStateException("GUI doesn't constructed");
-        }
-        return guiImpl.domElement;
+    public GUI open() {
+        guiImpl.open();
+        return this;
     }
 
-    void addListen(Controller controller) {
-        listen.push(controller);
+    public GUI open(boolean open) {
+        guiImpl.open(open);
+        return this;
     }
 
-    class ControllerOrFolder {
-        GUI folder;
-        Controller controller;
+    public GUI close() {
+        guiImpl.close();
+        return this;
+    }
 
-        ControllerOrFolder(GUI folder) {
-            this.folder = folder;
-        }
+    public GUI save() {
+        guiImpl.save();
+        return this;
+    }
 
-        ControllerOrFolder(Controller controller) {
-            this.controller = controller;
-        }
+    public GUI save(boolean recursive) {
+        guiImpl.save(recursive);
+        return this;
+    }
 
+    public GUI show() {
+        guiImpl.show();
+        return this;
+    }
+
+    public GUI show(boolean recursive) {
+        guiImpl.show(recursive);
+        return this;
+    }
+
+    public GUI hide() {
+        guiImpl.hide();
+        return this;
+    }
+
+    public GUI title(String title) {
+        guiImpl.title(title);
+        return this;
+    }
+
+    public GUI reset() {
+        guiImpl.reset();
+        return this;
+    }
+
+    public GUI reset(boolean recursive) {
+        guiImpl.reset(recursive);
+        return this;
+    }
+
+    public void destroy() {
+        guiImpl.destroy();
     }
 
 }

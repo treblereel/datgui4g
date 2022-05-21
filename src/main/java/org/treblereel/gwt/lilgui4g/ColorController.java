@@ -14,6 +14,8 @@
 
 package org.treblereel.gwt.lilgui4g;
 
+import jsinterop.base.Js;
+
 /**
  * @author Dmitrii Tikhomirov
  * Created by treblereel on 4/6/18.
@@ -21,12 +23,6 @@ package org.treblereel.gwt.lilgui4g;
 public class ColorController extends Controller<Object, ColorController, ColorControllerImpl> {
 
     ColorController(GUI parent, Object entity, String name) {
-        super(parent, entity, name);
-    }
-
-    @Override
-    protected void init() {
-        setImpl(parent.guiImpl.addColorController(holder, name));
-        super.init();
+        super(parent, Js.uncheckedCast(parent.guiImpl.addColorController(entity, name)));
     }
 }

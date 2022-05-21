@@ -24,9 +24,4 @@ import jsinterop.annotations.JsType;
 @JsType(isNative = true, namespace = JsPackage.GLOBAL, name = "lil.GUI.NumberController")
 class NumberControllerImpl extends ControllerImpl {
 
-    native NumberControllerImpl min(Number min);
-
-    native NumberControllerImpl max(Number max);
-
-    native NumberControllerImpl step(Number step);
 }

@@ -14,7 +14,8 @@
 
 package org.treblereel.gwt.lilgui4g;
 
-import elemental2.dom.HTMLDivElement;
+import elemental2.core.JsArray;
+import elemental2.dom.HTMLElement;
 import jsinterop.annotations.JsConstructor;
 import jsinterop.annotations.JsMethod;
 import jsinterop.annotations.JsPackage;
@@ -30,14 +31,22 @@ import jsinterop.base.JsPropertyMap;
 public class GUIImpl {
 
     @JsProperty
-    boolean autoPlace;
+    HTMLElement domElement;
 
     @JsProperty
-    HTMLDivElement domElement;
+    GUIImpl parent;
 
-    JsPropertyMap load;
+    @JsProperty
+    boolean _closed;
 
-    String preset;
+    @JsProperty
+    GUIImpl root;
+
+    @JsProperty
+    JsArray<GUIImpl> folders;
+
+    @JsProperty
+    JsArray<ControllerImpl> controllers;
 
     @JsConstructor
     GUIImpl() {
@@ -45,65 +54,61 @@ public class GUIImpl {
     }
 
     @JsConstructor
-    GUIImpl(GUIProperty guiProperty) {
+    GUIImpl(JsPropertyMap property) {
 
     }
 
     public native GUIImpl addFolder(String name);
 
     @JsMethod(name = "add")
-    public native BooleanControllerImpl addBooleanController(Object keeper, String control);
+    public native BooleanControllerImpl addBooleanController(Object obj, String control);
 
     @JsMethod(name = "add")
-    public native StringControllerImpl addStringController(Object keeper, String control);
+    public native StringControllerImpl addStringController(Object obj, String control);
 
     @JsMethod(name = "add")
-    public native NumberControllerBoxImpl addNumberControllerBox(Object keeper, String control);
-
-    @JsMethod(name = "add")
-    public native NumberControllerBoxImpl addNumberControllerBox(Object keeper, String control, int min);
-
-    @JsMethod(name = "add")
-    public native NumberControllerBoxImpl addNumberControllerBox(Object keeper, String control, float min);
-
-    @JsMethod(name = "add")
-    public native NumberControllerBoxImpl addNumberControllerBox(Object keeper, String control, double min);
+    public native ControllerImpl addNumberController(Object obj, String control);
 
     @JsMethod(name = "addColor")
-    public native ColorControllerImpl addColorController(Object JsPropertyMap, int[] rgb);
+    public native ColorControllerImpl addColorController(Object obj, int[] rgb);
 
     @JsMethod(name = "addColor")
-    public native ColorControllerImpl addColorController(Object JsPropertyMap, double[] rgb);
+    public native ColorControllerImpl addColorController(Object obj, double[] rgb);
 
     @JsMethod(name = "addColor")
-    public native ColorControllerImpl addColorController(Object JsPropertyMap, String cssColor);
+    public native ColorControllerImpl addColorController(Object obj, String cssColor);
 
     @JsMethod(name = "add")
-    public native OptionControllerImpl addOptionController(Object JsPropertyMap, String control, Object args);
+    public native OptionControllerImpl addOptionController(Object obj, String control, Object args);
 
     @JsMethod(name = "add")
-    public native FunctionControllerImpl addFunctionController(Object JsPropertyMap, String name);
+    public native FunctionControllerImpl addFunctionController(Object obj, String name);
 
-    public native void open();
+    public native GUIImpl load(Object obj);
 
-    public native void close();
+    public native GUIImpl load(Object obj, boolean recursive);
 
-    public native void remove(ControllerImpl impl);
+    public native GUIImpl open();
 
-    public native void removeFolder(GUIImpl impl);
+    public native GUIImpl open(boolean open);
 
-    public native void remember(Object json);
+    public native GUIImpl close();
 
-    public native void save();
+    public native GUIImpl save();
 
-    public native void saveAs(String presetName);
+    public native GUIImpl save(boolean recursive);
 
-    public native void revert();
+    public native GUIImpl show();
 
-    public native void revert(GUIImpl gui);
+    public native GUIImpl show(boolean recursive);
 
-    public native void updateDisplay();
+    public native GUIImpl hide();
 
-    public native void destroy();
+    public native GUIImpl title(String title);
+
+    public native GUIImpl reset();
+    public native GUIImpl destroy();
+
+    public native GUIImpl reset(boolean recursive);
 
 }

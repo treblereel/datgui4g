@@ -14,8 +14,7 @@
 
 package org.treblereel.gwt.lilgui4g;
 
-import elemental2.core.Global;
-import elemental2.dom.DomGlobal;
+import jsinterop.base.Js;
 
 /**
  * @author Dmitrii Tikhomirov
@@ -24,15 +23,7 @@ import elemental2.dom.DomGlobal;
 public class FunctionController extends Controller<Object, FunctionController, FunctionControllerImpl> {
 
     FunctionController(GUI parent, Object holder, String name) {
-        super(parent, holder, name);
-    }
-
-    @Override
-    protected void init() {
-        DomGlobal.console.log("??? " + Global.JSON.stringify(holder));
-
-        setImpl(parent.guiImpl.addFunctionController(holder, name));
-        super.init();
+        super(parent, Js.uncheckedCast(parent.guiImpl.addFunctionController(holder, name)));
     }
 }
 

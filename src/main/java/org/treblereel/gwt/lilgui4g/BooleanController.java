@@ -14,6 +14,8 @@
 
 package org.treblereel.gwt.lilgui4g;
 
+import jsinterop.base.Js;
+
 /**
  * @author Dmitrii Tikhomirov
  * Created by treblereel on 4/4/18.
@@ -21,12 +23,6 @@ package org.treblereel.gwt.lilgui4g;
 public class BooleanController extends Controller<Boolean, BooleanController, BooleanControllerImpl> {
 
     BooleanController(GUI parent, Object entity, String name) {
-        super(parent, entity, name);
-    }
-
-    @Override
-    protected void init() {
-        setImpl(parent.guiImpl.addBooleanController(holder, name));
-        super.init();
+        super(parent, Js.uncheckedCast(parent.guiImpl.addBooleanController(entity, name)));
     }
 }

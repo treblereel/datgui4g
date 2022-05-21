@@ -23,73 +23,95 @@ import jsinterop.base.JsPropertyMap;
  * @author Dmitrii Tikhomirov
  * Created by treblereel on 4/9/18.
  */
-@JsType(namespace = JsPackage.GLOBAL, isNative = true, name = "Object")
 public class GUIProperty {
 
-    private boolean autoPlace;
+    private boolean autoPlace = true;
 
-    private boolean touchStyles;
+    private boolean touchStyles = true;
 
-    private boolean injectStyles;
+    private boolean injectStyles = true;
 
     private HTMLElement container;
 
     private String title;
 
-    private double width;
+    private double width = 245;
 
-    private GUIImpl parent;
+    private GUI parent;
 
-    private GUIProperty() {
 
+    public boolean isAutoPlace() {
+        return autoPlace;
     }
 
-    public static class GUIPropertyBuilder {
+    public GUIProperty setAutoPlace(boolean autoPlace) {
+        this.autoPlace = autoPlace;
+        return this;
+    }
 
-        private GUIProperty property = new GUIProperty();
+    public boolean isTouchStyles() {
+        return touchStyles;
+    }
 
-        public GUIPropertyBuilder() {
+    public GUIProperty setTouchStyles(boolean touchStyles) {
+        this.touchStyles = touchStyles;
+        return this;
+    }
 
-        }
+    public boolean isInjectStyles() {
+        return injectStyles;
+    }
 
-        public GUIPropertyBuilder setAutoPlace(boolean autoPlace) {
-            property.autoPlace = autoPlace;
-            return this;
-        }
+    public GUIProperty setInjectStyles(boolean injectStyles) {
+        this.injectStyles = injectStyles;
+        return this;
+    }
 
-        public GUIPropertyBuilder setTouchStyles(boolean touchStyles) {
-            property.touchStyles = touchStyles;
-            return this;
-        }
+    public HTMLElement getContainer() {
+        return container;
+    }
 
-        public GUIPropertyBuilder setInjectStyles(boolean injectStyles) {
-            property.injectStyles = injectStyles;
-            return this;
-        }
+    public GUIProperty setContainer(HTMLElement container) {
+        this.container = container;
+        return this;
+    }
 
-        public GUIPropertyBuilder setContainer(HTMLElement container) {
-            property.container = container;
-            return this;
-        }
+    public String getTitle() {
+        return title;
+    }
 
-        public GUIPropertyBuilder setTitle(String title) {
-            property.title = title;
-            return this;
-        }
+    public GUIProperty setTitle(String title) {
+        this.title = title;
+        return this;
+    }
 
-        public GUIPropertyBuilder setWidth(double width) {
-            property.width = width;
-            return this;
-        }
+    public double getWidth() {
+        return width;
+    }
 
-        public GUIPropertyBuilder setParent(GUI parent) {
-            property.parent = parent.guiImpl;
-            return this;
-        }
+    public GUIProperty setWidth(double width) {
+        this.width = width;
+        return this;
+    }
 
-        public GUIProperty build() {
-            return property;
-        }
+    public GUIProperty setParent(GUI parent) {
+        this.parent = parent;
+        return this;
+    }
+
+    JsPropertyMap toNative() {
+        JsPropertyMap properties = JsPropertyMap.of();
+        properties.set("autoPlace", autoPlace);
+        if (container != null)
+            properties.set("container", container);
+        properties.set("width", width);
+        if (title != null)
+            properties.set("title", title);
+        properties.set("injectStyles", injectStyles);
+        properties.set("touchStyles", touchStyles);
+        if (parent != null && parent.guiImpl != null)
+            properties.set("parent", parent.guiImpl);
+        return properties;
     }
 
 }

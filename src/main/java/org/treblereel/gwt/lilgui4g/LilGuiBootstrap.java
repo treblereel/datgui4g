@@ -17,7 +17,6 @@ package org.treblereel.gwt.lilgui4g;
 import elemental2.dom.DomGlobal;
 import elemental2.dom.HTMLHeadElement;
 import elemental2.dom.HTMLScriptElement;
-import elemental2.dom.HTMLStyleElement;
 import org.treblereel.gwt.resources.api.client.ClientBundle;
 import org.treblereel.gwt.resources.api.client.Resource;
 import org.treblereel.gwt.resources.api.client.TextResource;

@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.treblereel.gwt</groupId>
     <artifactId>lil-gui</artifactId>
-    <version>0.16.1</version>
+    <version>0.16.1.1</version>
     <packaging>jar</packaging>
     <name>lil-gui4g</name>
     <description>lil-gui for GWT</description>

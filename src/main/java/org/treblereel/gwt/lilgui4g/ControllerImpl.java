@@ -14,6 +14,8 @@
 
 package org.treblereel.gwt.lilgui4g;
 
+import elemental2.core.JsNumber;
+import elemental2.dom.HTMLElement;
 import jsinterop.annotations.JsPackage;
 import jsinterop.annotations.JsType;
 
@@ -24,19 +26,40 @@ import jsinterop.annotations.JsType;
 @JsType(isNative = true, namespace = JsPackage.GLOBAL, name = "lil.GUI.Controller")
 class ControllerImpl {
 
-    native Object onChange(OnChange event);
+    boolean _disabled;
 
-    native Object onFinishChange(OnFinishChange event);
+    HTMLElement domElement;
 
-    native Object setValue(Object newValue);
+    Object object;
+
+    String property;
+
+    native ControllerImpl onChange(OnChange event);
+
+    native ControllerImpl onFinishChange(OnFinishChange event);
+
+    native ControllerImpl setValue(Object newValue);
 
     native Object getValue();
-
-    native boolean isModified();
 
     native ControllerImpl listen();
 
     native ControllerImpl listen(boolean listen);
 
-    native void destroy();
+    native ControllerImpl destroy();
+    native ControllerImpl updateDisplay();
+
+    native ControllerImpl reset();
+    native ControllerImpl disable();
+    native ControllerImpl disable(boolean disabled);
+    native ControllerImpl enable();
+    native ControllerImpl enable(boolean enabled);
+
+    native ControllerImpl name(String name);
+
+    native ControllerImpl min(JsNumber min);
+
+    native ControllerImpl max(JsNumber max);
+
+    native ControllerImpl step(JsNumber step);
 }
